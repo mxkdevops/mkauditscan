@@ -1,0 +1,8 @@
+{
+  "check_users": true,
+  "check_ports": true,
+  "check_firewall": true,
+  "check_crontab": true,
+  "check_integrity": true,
+  "critical_files": ["/etc/passwd", "/etc/shadow"]
+}

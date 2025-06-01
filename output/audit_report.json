@@ -1,0 +1,7 @@
+{
+  "Users": "\n--- Users Info ---\nUsers:\n\nSudo Access:\n\nLast Login:\n",
+  "Ports": "\n--- Listening Ports ---\nError: exec: \"ss\": executable file not found in %PATH%",
+  "Firewall": "\n--- Firewall Status ---\nUnable to determine firewall status",
+  "Crontab": "\n--- Crontab Entries ---\n\n/etc/crontab:\n\nUser Crontab:\n",
+  "Integrity": "\n--- File Integrity Check (SHA256) ---\n/bin/ls: ERROR opening file\n/bin/bash: ERROR opening file\n/usr/bin/ssh: ERROR opening file\n"
+}

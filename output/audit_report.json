@@ -1,7 +1,72 @@
 {
-  "Users": "\n--- Users Info ---\nUsers:\n\nSudo Access:\n\nLast Login:\n",
-  "Ports": "\n--- Listening Ports ---\nError: exec: \"ss\": executable file not found in %PATH%",
-  "Firewall": "\n--- Firewall Status ---\nUnable to determine firewall status",
-  "Crontab": "\n--- Crontab Entries ---\n\n/etc/crontab:\n\nUser Crontab:\n",
-  "Integrity": "\n--- File Integrity Check (SHA256) ---\n/bin/ls: ERROR opening file\n/bin/bash: ERROR opening file\n/usr/bin/ssh: ERROR opening file\n"
+  "Users": {
+    "AllUsers": [
+      ""
+    ],
+    "LastLogin": "Could not retrieve last login information",
+    "SudoUsers": "Could not retrieve sudo group"
+  },
+  "Ports": {
+    "Error": "Unable to retrieve port info"
+  },
+  "Firewall": {
+    "FirewallCheck": "Started",
+    "Status": "Unable to determine firewall status",
+    "Tool": "none"
+  },
+  "Crontab": {
+    "Error": "Failed to retrieve user list"
+  },
+  "Integrity": {
+    "MD5Hashes": {
+      "/etc/passwd": "Error hashing",
+      "/etc/shadow": "Error hashing",
+      "/etc/ssh/sshd_config": "Error hashing"
+    }
+  },
+  "Sudoers": {
+    "PasswordlessSudo": "None found or inaccessible",
+    "SudoGroupMembers": "Could not retrieve sudo group members",
+    "SudoersFile": "Could not read /etc/sudoers"
+  },
+  "Kernel": {
+    "Kernel Version": "",
+    "fs.suid_dumpable": "❌ Expected: 0, Found: ",
+    "kernel.kptr_restrict": "❌ Expected: 1, Found: ",
+    "kernel.randomize_va_space": "❌ Expected: 2, Found: ",
+    "net.ipv4.ip_forward": "❌ Expected: 0, Found: "
+  },
+  "SSH": {
+    "PasswordAuthentication": "⚠️ Not set (Expected: no)",
+    "PermitEmptyPasswords": "⚠️ Not set (Expected: no)",
+    "PermitRootLogin": "⚠️ Not set (Expected: no)",
+    "UsePAM": "⚠️ Not set (Expected: yes)",
+    "X11Forwarding": "⚠️ Not set (Expected: no)"
+  },
+  "Hardening": {
+    "Hidden processes": "",
+    "Password max days": "",
+    "Password min days": "",
+    "World writable files": ""
+  },
+  "Services": {
+    "Risky Services": "✅ No known risky services detected",
+    "Running Services": ""
+  },
+  "Auth": {
+    "RecentAuthLog": "Could not retrieve /var/log/auth.log"
+  },
+  "Packages": {
+    "Packages": "Could not retrieve package list"
+  },
+  "AuditD": {
+    "AuditdStatus": "Could not retrieve auditd status"
+  },
+  "LogCheck": {
+    "LogCheckOutput": "Logcheck not found or not installed"
+  },
+  "Network": {
+    "IPAddresses": "Could not retrieve IP configuration",
+    "Routes": "Could not retrieve routing table"
+  }
 }

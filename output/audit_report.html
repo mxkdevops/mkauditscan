@@ -14,51 +14,17 @@
 <body>
     <h1>System Audit Report</h1>
 
-    <div class="section">
-        <h2>Users</h2>
-        <pre>
---- Users Info ---
-Users:
+    <div class="section"><h2>Sudoers</h2><pre>map[PasswordlessSudo:None found or inaccessible SudoGroupMembers:Could not retrieve sudo group members SudoersFile:Could not read /etc/sudoers]</pre></div>
+<div class="section"><h2>Kernel</h2><pre>map[Kernel Version: fs.suid_dumpable:❌ Expected: 0, Found:  kernel.kptr_restrict:❌ Expected: 1, Found:  kernel.randomize_va_space:❌ Expected: 2, Found:  net.ipv4.ip_forward:❌ Expected: 0, Found: ]</pre></div>
+<div class="section"><h2>SSH</h2><pre>map[PasswordAuthentication:⚠️ Not set (Expected: no) PermitEmptyPasswords:⚠️ Not set (Expected: no) PermitRootLogin:⚠️ Not set (Expected: no) UsePAM:⚠️ Not set (Expected: yes) X11Forwarding:⚠️ Not set (Expected: no)]</pre></div>
+<div class="section"><h2>Hardening</h2><pre>map[Hidden processes: Password max days: Password min days: World writable files:]</pre></div>
+<div class="section"><h2>Services</h2><pre>map[Risky Services:✅ No known risky services detected Running Services:]</pre></div>
+<div class="section"><h2>Authentication Logs</h2><pre>map[RecentAuthLog:Could not retrieve /var/log/auth.log]</pre></div>
+<div class="section"><h2>Installed Packages</h2><pre>map[Packages:Could not retrieve package list]</pre></div>
+<div class="section"><h2>AuditD</h2><pre>map[AuditdStatus:Could not retrieve auditd status]</pre></div>
+<div class="section"><h2>LogCheck</h2><pre>map[LogCheckOutput:Logcheck not found or not installed]</pre></div>
+<div class="section"><h2>Network Info</h2><pre>map[IPAddresses:Could not retrieve IP configuration Routes:Could not retrieve routing table]</pre></div>
 
-Sudo Access:
 
-Last Login:
-</pre>
-    </div>
-
-    <div class="section">
-        <h2>Ports</h2>
-        <pre>
---- Listening Ports ---
-Error: exec: &#34;ss&#34;: executable file not found in %PATH%</pre>
-    </div>
-
-    <div class="section">
-        <h2>Firewall</h2>
-        <pre>
---- Firewall Status ---
-Unable to determine firewall status</pre>
-    </div>
-
-    <div class="section">
-        <h2>Crontab</h2>
-        <pre>
---- Crontab Entries ---
-
-/etc/crontab:
-
-User Crontab:
-</pre>
-    </div>
-
-    <div class="section">
-        <h2>Integrity Check</h2>
-        <pre>
---- File Integrity Check (SHA256) ---
-/bin/ls: ERROR opening file
-/bin/bash: ERROR opening file
-/usr/bin/ssh: ERROR opening file
-</pre>
-    </div>
 </body>
 </html>

@@ -1,32 +1,30 @@
-// integrity.go
 package modules
 
 import (
-	"crypto/sha256"
-	"fmt"
-	"io"
-	"os"
+	"os/exec"
+	"strings"
 )
 
-var CriticalFiles = []string{"/bin/ls", "/bin/bash", "/usr/bin/ssh"}
+func CheckFileIntegrity() map[string]interface{} {
+	result := make(map[string]interface{})
 
-func CheckFileIntegrity() string {
-	output := "\n--- File Integrity Check (SHA256) ---\n"
-	for _, file := range CriticalFiles {
-		f, err := os.Open(file)
-		if err != nil {
-			output += fmt.Sprintf("%s: ERROR opening file\n", file)
-			continue
+	// Check for changes in important system files using md5sum (example)
+	files := []string{"/etc/passwd", "/etc/shadow", "/etc/ssh/sshd_config"}
+	hashes := make(map[string]string)
+
+	for _, file := range files {
+		output, err := exec.Command("md5sum", file).Output()
+		if err == nil {
+			parts := strings.Fields(string(output))
+			if len(parts) >= 1 {
+				hashes[file] = parts[0]
+			}
+		} else {
+			hashes[file] = "Error hashing"
 		}
-		h := sha256.New()
-		_, err = io.Copy(h, f)
-		f.Close()
-		if err != nil {
-			output += fmt.Sprintf("%s: ERROR reading file\n", file)
-			continue
-		}
-		hash := fmt.Sprintf("%x", h.Sum(nil))
-		output += fmt.Sprintf("%s: %s\n", file, hash)
 	}
-	return output
+	result["MD5Hashes"] = hashes
+
+	// Add future tripwire/aide integration here
+	return result
 }

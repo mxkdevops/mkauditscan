@@ -4,18 +4,28 @@ import (
 	"os/exec"
 )
 
-func CheckFirewallStatus() string {
-	output := "\n--- Firewall Status ---\n"
+func CheckFirewallStatus() map[string]interface{} {
+	result := make(map[string]interface{})
+	result["FirewallCheck"] = "Started"
+
+	// Try ufw
 	ufwStatus, err := exec.Command("ufw", "status").Output()
 	if err == nil {
-		output += string(ufwStatus)
-	} else {
-		iptables, err := exec.Command("iptables", "-L").Output()
-		if err == nil {
-			output += string(iptables)
-		} else {
-			output += "Unable to determine firewall status"
-		}
+		result["Tool"] = "ufw"
+		result["Status"] = string(ufwStatus)
+		return result
 	}
-	return output
+
+	// Fallback to iptables
+	iptablesStatus, err := exec.Command("iptables", "-L").Output()
+	if err == nil {
+		result["Tool"] = "iptables"
+		result["Status"] = string(iptablesStatus)
+		return result
+	}
+
+	// If both failed
+	result["Tool"] = "none"
+	result["Status"] = "Unable to determine firewall status"
+	return result
 }

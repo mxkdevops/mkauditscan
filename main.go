@@ -12,28 +12,58 @@ import (
 )
 
 type AuditReport struct {
-	Users     string
-	Ports     string
-	Firewall  string
-	Crontab   string
-	Integrity string
+	Users     map[string]interface{}
+	Ports     map[string]interface{}
+	Firewall  map[string]interface{}
+	Crontab   map[string]interface{}
+	Integrity map[string]interface{}
+	Sudoers   map[string]interface{}
+	Kernel    map[string]interface{}
+	SSH       map[string]interface{}
+	Hardening map[string]interface{}
+	Services  map[string]interface{}
+	Auth      map[string]interface{}
+	Packages  map[string]interface{}
+	AuditD    map[string]interface{}
+	LogCheck  map[string]interface{}
+	Network   map[string]interface{}
 }
 
 func main() {
 	// Run all modules
 	users := modules.GetUsersInfo()
+	sudoers := modules.GetSudoersInfo()
 	ports := modules.GetListeningPorts()
 	firewall := modules.CheckFirewallStatus()
 	crontab := modules.GetCrontabEntries()
 	integrity := modules.CheckFileIntegrity()
+	kernel := modules.CheckKernelHardening()
+	ssh := modules.AuditSSHConfig()
+	services := modules.CheckRunningServices()
+	hardening := modules.CheckHardening()
+	auth := modules.GetAuthInfo()
+	packages := modules.GetInstalledPackages()
+	auditd := modules.GetAuditdStatus()
+	logcheck := modules.GetLogCheckResults()
+	network := modules.GetNetworkInfo()
 
 	// Combine into report
 	report := AuditReport{
 		Users:     users,
+		Sudoers:   sudoers,
 		Ports:     ports,
 		Firewall:  firewall,
 		Crontab:   crontab,
 		Integrity: integrity,
+		Kernel:    kernel,
+		SSH:       ssh,
+		Services:  services,
+		Hardening: hardening,
+		Auth:      auth,
+		Packages:  packages,
+		AuditD:    auditd,
+		LogCheck:  logcheck,
+		Network:   network,
 	}
 
 	// Ensure output directory exists
@@ -78,30 +108,18 @@ func writeHTML(report AuditReport, filename string) {
 <body>
     <h1>System Audit Report</h1>
 
-    <div class="section">
-        <h2>Users</h2>
-        <pre>{{ .Users }}</pre>
-    </div>
+    <div class="section"><h2>Sudoers</h2><pre>{{ .Sudoers }}</pre></div>
+<div class="section"><h2>Kernel</h2><pre>{{ .Kernel }}</pre></div>
+<div class="section"><h2>SSH</h2><pre>{{ .SSH }}</pre></div>
+<div class="section"><h2>Hardening</h2><pre>{{ .Hardening }}</pre></div>
+<div class="section"><h2>Services</h2><pre>{{ .Services }}</pre></div>
+<div class="section"><h2>Authentication Logs</h2><pre>{{ .Auth }}</pre></div>
+<div class="section"><h2>Installed Packages</h2><pre>{{ .Packages }}</pre></div>
+<div class="section"><h2>AuditD</h2><pre>{{ .AuditD }}</pre></div>
+<div class="section"><h2>LogCheck</h2><pre>{{ .LogCheck }}</pre></div>
+<div class="section"><h2>Network Info</h2><pre>{{ .Network }}</pre></div>
 
-    <div class="section">
-        <h2>Ports</h2>
-        <pre>{{ .Ports }}</pre>
-    </div>
 
-    <div class="section">
-        <h2>Firewall</h2>
-        <pre>{{ .Firewall }}</pre>
-    </div>
-
-    <div class="section">
-        <h2>Crontab</h2>
-        <pre>{{ .Crontab }}</pre>
-    </div>
-
-    <div class="section">
-        <h2>Integrity Check</h2>
-        <pre>{{ .Integrity }}</pre>
-    </div>
 </body>
 </html>`
 

@@ -1,18 +1,19 @@
-// ports.go
 package modules
 
 import (
 	"os/exec"
 )
 
-func GetListeningPorts() string {
-	output := "\n--- Listening Ports ---\n"
-	cmd := exec.Command("ss", "-tuln")
-	res, err := cmd.CombinedOutput()
+func GetListeningPorts() map[string]interface{} {
+	result := make(map[string]interface{})
+
+	// netstat (preferred: ss or lsof in production)
+	output, err := exec.Command("ss", "-tuln").Output()
 	if err != nil {
-		output += "Error: " + err.Error()
+		result["Error"] = "Unable to retrieve port info"
 	} else {
-		output += string(res)
+		result["ListeningPorts"] = string(output)
 	}
-	return output
+
+	return result
 }

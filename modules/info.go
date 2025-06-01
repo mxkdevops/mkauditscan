@@ -1,19 +1,22 @@
-// modules/info.go
 package modules
 
 import (
-    "fmt"
-    "os/exec"
-    "strings"
+	"os/exec"
+	"strings"
 )
 
-func CollectSystemInfo() string {
-    hostname, _ := exec.Command("hostname").Output()
-    osInfo, _ := exec.Command("uname", "-a").Output()
-    uptime, _ := exec.Command("uptime", "-p").Output()
+func GetSystemInfo() map[string]interface{} {
+	result := make(map[string]interface{})
 
-    return fmt.Sprintf("System Info:\nHostname: %sOS: %sUptime: %s\n",
-        strings.TrimSpace(string(hostname)),
-        strings.TrimSpace(string(osInfo)),
-        strings.TrimSpace(string(uptime)))
+	hostname, _ := exec.Command("hostname").Output()
+	osRelease, _ := exec.Command("cat", "/etc/os-release").Output()
+	kernel, _ := exec.Command("uname", "-r").Output()
+	uptime, _ := exec.Command("uptime", "-p").Output()
+
+	result["Hostname"] = strings.TrimSpace(string(hostname))
+	result["KernelVersion"] = strings.TrimSpace(string(kernel))
+	result["OSRelease"] = strings.TrimSpace(string(osRelease))
+	result["Uptime"] = strings.TrimSpace(string(uptime))
+
+	return result
 }

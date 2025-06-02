@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Audit Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .flag { font-weight: bold; padding: 5px 10px; border-radius: 5px; color: white; }
+        .red { background: #e74c3c; }
+        .yellow { background: #f39c12; }
+        .green { background: #27ae60; }
+        .recommendation { margin: 10px 0; padding: 10px; background: #f8f8f8; border-left: 5px solid #3498db; }
+        .summary-box { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Audit Summary</h1>
+
+    <div class="summary-box">
+        <p>Total Issues: <strong>{{ .TotalIssues }}</strong></p>
+        <p><span class="flag red">Critical: {{ .RedFlags }}</span></p>
+        <p><span class="flag yellow">Warnings: {{ .YellowFlags }}</span></p>
+        <p><span class="flag green">OK: {{ .GreenFlags }}</span></p>
+    </div>
+
+    <h2>Top Recommendations</h2>
+    {{ if .Recommendations }}
+        <ul>
+        {{ range .Recommendations }}
+            <li class="recommendation">{{ . }}</li>
+        {{ end }}
+        </ul>
+    {{ else }}
+        <p>No critical recommendations.</p>
+    {{ end }}
+
+    <p><a href="audit_report.html">View Full Detailed Report</a></p>
+</body>
+</html>
